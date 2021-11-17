@@ -29,6 +29,8 @@ def victory(word, keyword):
 
 print("H A N G M A N")
 keyword_list = ["python", "java", "kotlin", "javascript"]
+valid_letter = "abcdefghijklmnopqrstuvwxyz"
+previous_guess = []
 keyword = random.choice(keyword_list)
 masked_word = mask(keyword)
 lives = 8
@@ -39,13 +41,22 @@ while lives > 0:
     print("Input a letter: ", end="")
     guess = input()
 
-    if guess not in keyword:
-        print("That letter doesn't appear in the word")
-        lives -= 1
+    if len(guess) == 0 or len(guess) > 1:
+        print("You should input a single letter")
         continue
 
-    if guess in masked_word:
-        print("No improvements")
+    if guess not in valid_letter:
+        print("Please enter a lowercase English letter")
+        continue
+
+    if guess in previous_guess:
+        print("You've already guessed this letter")
+        continue
+
+    previous_guess.append(guess)
+
+    if guess not in keyword:
+        print("That letter doesn't appear in the word")
         lives -= 1
         continue
 
